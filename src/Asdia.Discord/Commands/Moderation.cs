@@ -14,7 +14,7 @@
         [Command("nick")]
         [Description("Changes the nickname of a user.")]
         [RequirePermissions(DSharpPlus.Permissions.ChangeNickname)]
-        public async Task NickCommand(CommandContext ctx, DiscordMember user, [RemainingText] string nickname)
+        public async Task NickCommand(CommandContext ctx, [Description("The user with the changed nickname.")] DiscordMember user, [RemainingText][Description("The new nickname.")] string nickname)
         {
             try
             {
@@ -35,7 +35,7 @@
         [Command("kick")]
         [Description("Kicks a user from the guild.")]
         [RequirePermissions(DSharpPlus.Permissions.KickMembers)]
-        public async Task KickCommand(CommandContext ctx, DiscordMember user, [RemainingText] string reason)
+        public async Task KickCommand(CommandContext ctx, [Description("The user to kick.")] DiscordMember user, [RemainingText][Description("The reason behind kicking the user.")] string reason)
         {
             try
             {
@@ -52,7 +52,7 @@
         [Command("ban")]
         [Description("Bans a user from the guild.")]
         [RequirePermissions(DSharpPlus.Permissions.BanMembers)]
-        public async Task BanCommand(CommandContext ctx, DiscordMember user, int deleteMessageDays, [RemainingText] string reason)
+        public async Task BanCommand(CommandContext ctx, [Description("The user to ban.")] DiscordMember user, [Description("The number of days of messages from the banned user to delete.")] int deleteMessageDays, [RemainingText][Description("The reason behind banning the user.")] string reason)
         {
             try
             {
@@ -69,7 +69,7 @@
         [Command("move")]
         [Description("Moves a user to a voice channel.")]
         [RequirePermissions(DSharpPlus.Permissions.MoveMembers)]
-        public async Task BanCommand(CommandContext ctx, DiscordMember user, DiscordChannel channel)
+        public async Task BanCommand(CommandContext ctx, [Description("The user to move.")] DiscordMember user, [Description("The channel to move to.")] DiscordChannel channel)
         {
             try
             {
@@ -86,7 +86,7 @@
         [Command("mutev")]
         [Description("Mutes a user in a voice channel.")]
         [RequirePermissions(DSharpPlus.Permissions.MuteMembers)]
-        public async Task MuteVoiceCommand(CommandContext ctx, DiscordMember user)
+        public async Task MuteVoiceCommand(CommandContext ctx, [Description("The user to mute.")] DiscordMember user)
         {
             try
             {
@@ -103,7 +103,7 @@
         [Command("deaf")]
         [Description("Deafens a user in a voice channel.")]
         [RequirePermissions(DSharpPlus.Permissions.DeafenMembers)]
-        public async Task DeafCommand(CommandContext ctx, DiscordMember user)
+        public async Task DeafCommand(CommandContext ctx, [Description("The user to deafen.")] DiscordMember user)
         {
             try
             {
@@ -120,7 +120,7 @@
         [Command("unmutev")]
         [Description("Unmutes a user in a voice channel.")]
         [RequirePermissions(DSharpPlus.Permissions.MuteMembers)]
-        public async Task UnmuteVoiceCommand(CommandContext ctx, DiscordMember user)
+        public async Task UnmuteVoiceCommand(CommandContext ctx, [Description("The user to unmute.")] DiscordMember user)
         {
             try
             {
@@ -137,7 +137,7 @@
         [Command("undeaf")]
         [Description("Undeafens a user in a voice channel.")]
         [RequirePermissions(DSharpPlus.Permissions.DeafenMembers)]
-        public async Task UndeafCommand(CommandContext ctx, DiscordMember user)
+        public async Task UndeafCommand(CommandContext ctx, [Description("The user to undeafen.")] DiscordMember user)
         {
             try
             {
@@ -154,7 +154,7 @@
         [Command("mute")]
         [Description("Mutes a user.")]
         [RequirePermissions(DSharpPlus.Permissions.Administrator)]
-        public async Task MuteCommand(CommandContext ctx, DiscordMember user, [RemainingText] string reason)
+        public async Task MuteCommand(CommandContext ctx, [Description("The user to mute.")] DiscordMember user, [RemainingText][Description("The reason behind muting the user.")] string reason)
         {
             try
             {
@@ -171,7 +171,7 @@
         [Command("addrole")]
         [Description("Grants a user a role.")]
         [RequirePermissions(DSharpPlus.Permissions.Administrator)]
-        public async Task AddRoleCommand(CommandContext ctx, DiscordMember user, string roleID, [RemainingText] string reason)
+        public async Task AddRoleCommand(CommandContext ctx, [Description("The use to grant the role to.")] DiscordMember user, [Description("The ID of the role.")] string roleID, [RemainingText][Description("The reason behind granting the role to the user.")] string reason)
         {
             try
             {
@@ -190,7 +190,7 @@
         [Command("removerole")]
         [Description("Revokes a user's role.")]
         [RequirePermissions(DSharpPlus.Permissions.Administrator)]
-        public async Task RevokeRoleCommand(CommandContext ctx, DiscordMember user, string roleID, [RemainingText] string reason)
+        public async Task RevokeRoleCommand(CommandContext ctx, [Description("The user to remove the role from.")] DiscordMember user, [Description("The ID of the role.")] string roleID, [RemainingText][Description("The reason behind removing the role from the user.")] string reason)
         {
             try
             {

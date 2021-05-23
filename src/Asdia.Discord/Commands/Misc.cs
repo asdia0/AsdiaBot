@@ -34,14 +34,14 @@
 
         [Command("echo")]
         [Description("Echoes the message given.")]
-        public async Task PingCommand(CommandContext ctx, [RemainingText] string message)
+        public async Task PingCommand(CommandContext ctx, [RemainingText][Description("The message to echo")] string message)
         {
             await ctx.Channel.SendMessageAsync($"{message}").ConfigureAwait(false);
         }
 
         [Command("8ball")]
         [Description("Rolls an 8-ball")]
-        public async Task EightBallCommand(CommandContext ctx, [RemainingText] string question)
+        public async Task EightBallCommand(CommandContext ctx, [RemainingText][Description("The question to ask the 8-ball")] string question)
         {
             await ctx.Channel.SendMessageAsync(eightBallResponses[new Random().Next(0, eightBallResponses.Count - 1)]).ConfigureAwait(false);
         }
