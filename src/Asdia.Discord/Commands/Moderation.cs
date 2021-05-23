@@ -96,5 +96,56 @@
                 await ctx.Channel.SendMessageAsync(Program.CreateErrorEmbed(e));
             }
         }
+
+        [Command("deaf")]
+        [Description("Deafens a user in a voice channel.")]
+        [RequirePermissions(DSharpPlus.Permissions.MoveMembers)]
+        public async Task DeafCommand(CommandContext ctx, DiscordMember user)
+        {
+            try
+            {
+                await user.SetDeafAsync(true);
+
+                await ctx.Channel.SendMessageAsync($"Successfully deafened `{user.Username}`.").ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                await ctx.Channel.SendMessageAsync(Program.CreateErrorEmbed(e));
+            }
+        }
+
+        [Command("unmutev")]
+        [Description("Unmutes a user in a voice channel.")]
+        [RequirePermissions(DSharpPlus.Permissions.MoveMembers)]
+        public async Task UnmuteVoiceCommand(CommandContext ctx, DiscordMember user)
+        {
+            try
+            {
+                await user.SetMuteAsync(true);
+
+                await ctx.Channel.SendMessageAsync($"Successfully unmuted `{user.Username}`.").ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                await ctx.Channel.SendMessageAsync(Program.CreateErrorEmbed(e));
+            }
+        }
+
+        [Command("undeaf")]
+        [Description("Undeafens a user in a voice channel.")]
+        [RequirePermissions(DSharpPlus.Permissions.MoveMembers)]
+        public async Task UndeafCommand(CommandContext ctx, DiscordMember user)
+        {
+            try
+            {
+                await user.SetDeafAsync(true);
+
+                await ctx.Channel.SendMessageAsync($"Successfully undeafened `{user.Username}`.").ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                await ctx.Channel.SendMessageAsync(Program.CreateErrorEmbed(e));
+            }
+        }
     }
 }
