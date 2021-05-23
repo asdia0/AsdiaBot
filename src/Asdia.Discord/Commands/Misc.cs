@@ -8,7 +8,7 @@
     {
         [Command("echo")]
         [Description("Echoes the message given.")]
-        public async Task PingCommand(CommandContext ctx, string message)
+        public async Task PingCommand(CommandContext ctx, [RemainingText] string message)
         {
             await ctx.Channel.SendMessageAsync($"{message}").ConfigureAwait(false);
         }
