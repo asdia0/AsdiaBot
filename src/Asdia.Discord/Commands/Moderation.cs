@@ -8,6 +8,8 @@
 
     public class Moderation : BaseCommandModule
     {
+        public static ulong muteID = 845926252619104307;
+
         [Command("nick")]
         [Description("Changes the nickname of a user.")]
         [RequirePermissions(DSharpPlus.Permissions.ChangeNickname)]
@@ -139,6 +141,23 @@
             try
             {
                 await user.SetDeafAsync(true);
+
+                await ctx.Channel.SendMessageAsync($"Successfully undeafened `{user.Username}`.").ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                await ctx.Channel.SendMessageAsync(Program.CreateErrorEmbed(e));
+            }
+        }
+
+        [Command("mute")]
+        [Description("Mutes a user.")]
+        [RequirePermissions(DSharpPlus.Permissions.Administrator)]
+        public async Task MuteCommand(CommandContext ctx, DiscordMember user, [RemainingText] string reason)
+        {
+            try
+            {
+                await user.GrantRoleAsync(ctx.Guild.GetRole(muteID), reason);
 
                 await ctx.Channel.SendMessageAsync($"Successfully undeafened `{user.Username}`.").ConfigureAwait(false);
             }
