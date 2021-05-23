@@ -28,5 +28,22 @@
                 await ctx.Channel.SendMessageAsync(Program.CreateErrorEmbed(e));
             }
         }
+
+        [Command("kick")]
+        [Description("Kicks a user from the guild.")]
+        [RequirePermissions(DSharpPlus.Permissions.KickMembers)]
+        public async Task KickCommand(CommandContext ctx, DiscordMember user, [RemainingText] string reason)
+        {
+            try
+            {
+                await user.RemoveAsync(reason);
+
+                await ctx.Channel.SendMessageAsync($"Successfully kicked `{user.Username}`.").ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                await ctx.Channel.SendMessageAsync(Program.CreateErrorEmbed(e));
+            }
+        }
     }
 }
