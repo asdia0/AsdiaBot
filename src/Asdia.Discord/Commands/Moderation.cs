@@ -47,7 +47,7 @@
         }
 
         [Command("ban")]
-        [Description("Kicks a user from the guild.")]
+        [Description("Bans a user from the guild.")]
         [RequirePermissions(DSharpPlus.Permissions.BanMembers)]
         public async Task BanCommand(CommandContext ctx, DiscordMember user, int deleteMessageDays, [RemainingText] string reason)
         {
@@ -63,7 +63,7 @@
             }
         }
 
-        [Command("Move")]
+        [Command("move")]
         [Description("Moves a user to a voice channel.")]
         [RequirePermissions(DSharpPlus.Permissions.MoveMembers)]
         public async Task BanCommand(CommandContext ctx, DiscordMember user, DiscordChannel channel)
