@@ -5,6 +5,7 @@
     using System.Threading.Tasks;
     using DSharpPlus.CommandsNext;
     using DSharpPlus.CommandsNext.Attributes;
+    using Owoify;
 
     public class Misc : BaseCommandModule
     {
@@ -34,9 +35,9 @@
 
         [Command("echo")]
         [Description("Echoes the message given.")]
-        public async Task PingCommand(CommandContext ctx, [RemainingText][Description("The message to echo")] string message)
+        public async Task EchoCommand(CommandContext ctx, [RemainingText][Description("The message to echo")] string message)
         {
-            await ctx.Channel.SendMessageAsync($"{message}").ConfigureAwait(false);
+            await ctx.Channel.SendMessageAsync(message).ConfigureAwait(false);
         }
 
         [Command("8ball")]
@@ -44,6 +45,27 @@
         public async Task EightBallCommand(CommandContext ctx, [RemainingText][Description("The question to ask the 8-ball")] string question)
         {
             await ctx.Channel.SendMessageAsync(eightBallResponses[new Random().Next(0, eightBallResponses.Count - 1)]).ConfigureAwait(false);
+        }
+
+        [Command("owo")]
+        [Description("Owoifies the message given.")]
+        public async Task OwoCommand(CommandContext ctx, [RemainingText][Description("The message to owoify")] string message)
+        {
+            await ctx.Channel.SendMessageAsync(Owoifier.Owoify(message, Owoifier.OwoifyLevel.Owo)).ConfigureAwait(false);
+        }
+
+        [Command("uvu")]
+        [Description("Uvuifies the message given.")]
+        public async Task UvuCommand(CommandContext ctx, [RemainingText][Description("The message to uvuify")] string message)
+        {
+            await ctx.Channel.SendMessageAsync(Owoifier.Owoify(message, Owoifier.OwoifyLevel.Uvu)).ConfigureAwait(false);
+        }
+
+        [Command("uwu")]
+        [Description("Uwuifies the message given.")]
+        public async Task UwuCommand(CommandContext ctx, [RemainingText][Description("The message to uwuify")] string message)
+        {
+            await ctx.Channel.SendMessageAsync(Owoifier.Owoify(message, Owoifier.OwoifyLevel.Uwu)).ConfigureAwait(false);
         }
     }
 }
