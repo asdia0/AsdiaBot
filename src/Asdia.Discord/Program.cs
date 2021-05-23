@@ -29,6 +29,7 @@
             });
 
             commands.RegisterCommands<About>();
+            commands.RegisterCommands<Misc>();
 
             await discord.ConnectAsync();
             await Task.Delay(-1);
