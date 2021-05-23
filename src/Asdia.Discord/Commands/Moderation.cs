@@ -45,5 +45,22 @@
                 await ctx.Channel.SendMessageAsync(Program.CreateErrorEmbed(e));
             }
         }
+
+        [Command("ban")]
+        [Description("Kicks a user from the guild.")]
+        [RequirePermissions(DSharpPlus.Permissions.BanMembers)]
+        public async Task BanCommand(CommandContext ctx, DiscordMember user, int deleteMessageDays, [RemainingText] string reason)
+        {
+            try
+            {
+                await user.BanAsync(deleteMessageDays, reason);
+
+                await ctx.Channel.SendMessageAsync($"Successfully banned `{user.Username}`.").ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                await ctx.Channel.SendMessageAsync(Program.CreateErrorEmbed(e));
+            }
+        }
     }
 }
