@@ -46,7 +46,7 @@
             {
                 Color = new DiscordColor("#FF0000"),
                 Title = "An exception occurred when executing a command.",
-                Description = $"```{e.Message}```",
+                Description = $"```{e.GetType()}```",
                 Timestamp = DateTime.UtcNow
             };
         }
