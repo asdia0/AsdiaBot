@@ -6,6 +6,7 @@
     using DSharpPlus.CommandsNext.Attributes;
     using DSharpPlus.Entities;
 
+    [Group("admin")]
     public class Moderation : BaseCommandModule
     {
         public static ulong muteID = 845926252619104307;

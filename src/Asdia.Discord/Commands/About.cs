@@ -5,9 +5,11 @@
     using DSharpPlus.CommandsNext;
     using DSharpPlus.CommandsNext.Attributes;
 
+    [Group("client")]
     public class About : BaseCommandModule
     {
         [Command("ping")]
+        [Aliases("p")]
         [Description("Checks the latency between discord and the bot.")]
         public async Task PingCommand(CommandContext ctx)
         {
