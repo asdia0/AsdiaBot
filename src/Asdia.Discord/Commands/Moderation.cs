@@ -159,7 +159,45 @@
             {
                 await user.GrantRoleAsync(ctx.Guild.GetRole(muteID), reason);
 
-                await ctx.Channel.SendMessageAsync($"Successfully undeafened `{user.Username}`.").ConfigureAwait(false);
+                await ctx.Channel.SendMessageAsync($"Successfully muted `{user.Username}`.").ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                await ctx.Channel.SendMessageAsync(Program.CreateErrorEmbed(e));
+            }
+        }
+
+        [Command("addrole")]
+        [Description("Grants a user a role.")]
+        [RequirePermissions(DSharpPlus.Permissions.Administrator)]
+        public async Task AddRoleCommand(CommandContext ctx, DiscordMember user, string roleID, [RemainingText] string reason)
+        {
+            try
+            {
+                DiscordRole role = ctx.Guild.GetRole(ulong.Parse(roleID));
+
+                await user.GrantRoleAsync(role, reason);
+
+                await ctx.Channel.SendMessageAsync($"Successfully granted `{user.Username}` the role of {role.Name}.").ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                await ctx.Channel.SendMessageAsync(Program.CreateErrorEmbed(e));
+            }
+        }
+
+        [Command("removerole")]
+        [Description("Revokes a user's role.")]
+        [RequirePermissions(DSharpPlus.Permissions.Administrator)]
+        public async Task RevokeRoleCommand(CommandContext ctx, DiscordMember user, string roleID, [RemainingText] string reason)
+        {
+            try
+            {
+                DiscordRole role = ctx.Guild.GetRole(ulong.Parse(roleID));
+
+                await user.RevokeRoleAsync(role, reason);
+
+                await ctx.Channel.SendMessageAsync($"Successfully removed {role.Name} from `{user.Username}`").ConfigureAwait(false);
             }
             catch (Exception e)
             {
