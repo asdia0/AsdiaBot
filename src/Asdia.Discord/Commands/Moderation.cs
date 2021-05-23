@@ -79,5 +79,22 @@
                 await ctx.Channel.SendMessageAsync(Program.CreateErrorEmbed(e));
             }
         }
+
+        [Command("mutev")]
+        [Description("Mutes a user in a voice channel.")]
+        [RequirePermissions(DSharpPlus.Permissions.MoveMembers)]
+        public async Task MuteVoiceCommand(CommandContext ctx, DiscordMember user)
+        {
+            try
+            {
+                await user.SetMuteAsync(true);
+
+                await ctx.Channel.SendMessageAsync($"Successfully muted `{user.Username}`.").ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                await ctx.Channel.SendMessageAsync(Program.CreateErrorEmbed(e));
+            }
+        }
     }
 }
