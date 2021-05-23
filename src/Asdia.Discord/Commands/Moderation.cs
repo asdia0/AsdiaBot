@@ -62,5 +62,22 @@
                 await ctx.Channel.SendMessageAsync(Program.CreateErrorEmbed(e));
             }
         }
+
+        [Command("Move")]
+        [Description("Moves a user to a voice channel.")]
+        [RequirePermissions(DSharpPlus.Permissions.MoveMembers)]
+        public async Task BanCommand(CommandContext ctx, DiscordMember user, DiscordChannel channel)
+        {
+            try
+            {
+                await user.PlaceInAsync(channel);
+
+                await ctx.Channel.SendMessageAsync($"Successfully moved `{user.Username}` to {channel.Mention}.").ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                await ctx.Channel.SendMessageAsync(Program.CreateErrorEmbed(e));
+            }
+        }
     }
 }
