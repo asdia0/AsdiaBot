@@ -82,7 +82,7 @@
 
         [Command("mutev")]
         [Description("Mutes a user in a voice channel.")]
-        [RequirePermissions(DSharpPlus.Permissions.MoveMembers)]
+        [RequirePermissions(DSharpPlus.Permissions.MuteMembers)]
         public async Task MuteVoiceCommand(CommandContext ctx, DiscordMember user)
         {
             try
@@ -99,7 +99,7 @@
 
         [Command("deaf")]
         [Description("Deafens a user in a voice channel.")]
-        [RequirePermissions(DSharpPlus.Permissions.MoveMembers)]
+        [RequirePermissions(DSharpPlus.Permissions.DeafenMembers)]
         public async Task DeafCommand(CommandContext ctx, DiscordMember user)
         {
             try
@@ -116,7 +116,7 @@
 
         [Command("unmutev")]
         [Description("Unmutes a user in a voice channel.")]
-        [RequirePermissions(DSharpPlus.Permissions.MoveMembers)]
+        [RequirePermissions(DSharpPlus.Permissions.MuteMembers)]
         public async Task UnmuteVoiceCommand(CommandContext ctx, DiscordMember user)
         {
             try
@@ -133,7 +133,7 @@
 
         [Command("undeaf")]
         [Description("Undeafens a user in a voice channel.")]
-        [RequirePermissions(DSharpPlus.Permissions.MoveMembers)]
+        [RequirePermissions(DSharpPlus.Permissions.DeafenMembers)]
         public async Task UndeafCommand(CommandContext ctx, DiscordMember user)
         {
             try
