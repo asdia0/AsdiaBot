@@ -1,5 +1,6 @@
 ﻿namespace Asdia.Discord.Commands
 {
+    using System.Text.Json;
     using System.Threading.Tasks;
     using DSharpPlus.CommandsNext;
     using DSharpPlus.CommandsNext.Attributes;
@@ -8,9 +9,18 @@
     {
         [Command("ping")]
         [Aliases("p")]
+        [Description("Checks the latency between discord and the bot.")]
         public async Task PingCommand(CommandContext ctx)
         {
             await ctx.Channel.SendMessageAsync($"{ctx.Client.Ping}ms").ConfigureAwait(false);
+        }
+
+        [Command("prefix")]
+        [Aliases("pf")]
+        [Description("Returns all accepted prefixes.")]
+        public async Task PrefixCommand(CommandContext ctx)
+        {
+            await ctx.Channel.SendMessageAsync($"Accepted prefixes: `{JsonSerializer.Serialize<string[]>(Program.prefixes)}`").ConfigureAwait(false);
         }
     }
 }

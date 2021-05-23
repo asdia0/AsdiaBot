@@ -6,8 +6,10 @@
     using DSharpPlus;
     using DSharpPlus.CommandsNext;
 
-    class Program
+    public class Program
     {
+        public static string[] prefixes = new[] { "a!" };
+
         static void Main(string[] args)
         {
             MainAsync().GetAwaiter().GetResult();
@@ -23,7 +25,7 @@
 
             var commands = discord.UseCommandsNext(new CommandsNextConfiguration()
             {
-                StringPrefixes = new[] { "a!" }
+                StringPrefixes = prefixes
             });
 
             commands.RegisterCommands<About>();
