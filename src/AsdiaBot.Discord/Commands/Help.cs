@@ -1,4 +1,4 @@
-namespace Asdia.Discord.Commands
+namespace AsdiaBot.Discord.Commands
 {
     using DSharpPlus.CommandsNext;
     using DSharpPlus.CommandsNext.Converters;

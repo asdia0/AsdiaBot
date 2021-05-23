@@ -1,6 +1,6 @@
-﻿namespace Asdia.Discord
+﻿namespace AsdiaBot.Discord
 {
-    using Asdia.Discord.Commands;
+    using AsdiaBot.Discord.Commands;
     using System;
     using System.IO;
     using System.Threading.Tasks;

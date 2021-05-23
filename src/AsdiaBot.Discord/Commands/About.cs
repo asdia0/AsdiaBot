@@ -1,4 +1,4 @@
-﻿namespace Asdia.Discord.Commands
+﻿namespace AsdiaBot.Discord.Commands
 {
     using System.Text.Json;
     using System.Threading.Tasks;
