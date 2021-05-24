@@ -168,6 +168,23 @@
             }
         }
 
+        [Command("unmute")]
+        [Description("Unmutes a user.")]
+        [RequirePermissions(DSharpPlus.Permissions.Administrator)]
+        public async Task UnmuteCommand(CommandContext ctx, [Description("The user to unmute.")] DiscordMember user, [RemainingText][Description("The reason behind unmuting the user.")] string reason)
+        {
+            try
+            {
+                await user.RevokeRoleAsync(ctx.Guild.GetRole(muteID), reason);
+
+                await ctx.Channel.SendMessageAsync($"Successfully unmuted `{user.Username}`.").ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                await ctx.Channel.SendMessageAsync(Program.CreateErrorEmbed(e));
+            }
+        }
+
         [Command("addrole")]
         [Description("Grants a user a role.")]
         [RequirePermissions(DSharpPlus.Permissions.Administrator)]
