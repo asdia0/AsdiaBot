@@ -188,7 +188,7 @@
         [Command("addrole")]
         [Description("Grants a user a role.")]
         [RequirePermissions(DSharpPlus.Permissions.Administrator)]
-        public async Task AddRoleCommand(CommandContext ctx, [Description("The use to grant the role to.")] DiscordMember user, [Description("The ID of the role.")] string roleID, [RemainingText][Description("The reason behind granting the role to the user.")] string reason)
+        public async Task AddRoleCommand(CommandContext ctx, [Description("The user to grant the role to.")] DiscordMember user, [Description("The ID of the role.")] string roleID, [RemainingText][Description("The reason behind granting the role to the user.")] string reason)
         {
             try
             {
