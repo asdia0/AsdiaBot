@@ -11,8 +11,6 @@
 
     public class Program
     {
-        public static string[] prefixes = new[] { "a!" };
-
         public static ulong amongusID = 845950499248537600;
 
         public static void Main(string[] args)
@@ -32,7 +30,7 @@
 
             var commands = discord.UseCommandsNext(new CommandsNextConfiguration()
             {
-                StringPrefixes = prefixes
+                StringPrefixes = new[] { "a!" }
             });
 
             commands.RegisterCommands<About>();

@@ -20,7 +20,7 @@
         [Description("Returns all accepted prefixes.")]
         public async Task PrefixCommand(CommandContext ctx)
         {
-            await ctx.Channel.SendMessageAsync($"Accepted prefixes: `{JsonSerializer.Serialize<string[]>(Program.prefixes)}`").ConfigureAwait(false);
+            await ctx.Channel.SendMessageAsync($"Accepted prefixes: `a!`").ConfigureAwait(false);
         }
     }
 }
