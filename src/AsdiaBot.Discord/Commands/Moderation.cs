@@ -1,6 +1,7 @@
 ﻿namespace AsdiaBot.Discord.Commands
 {
     using System;
+    using System.Linq;
     using System.Threading.Tasks;
     using DSharpPlus.CommandsNext;
     using DSharpPlus.CommandsNext.Attributes;
@@ -220,6 +221,33 @@
             catch (Exception e)
             {
                 await ctx.Channel.SendMessageAsync(Program.CreateErrorEmbed(e));
+            }
+        }
+
+        [Command("purge")]
+        [Description("Deletes multiple messages in the channel.")]
+        [RequirePermissions(DSharpPlus.Permissions.ManageMessages)]
+        public async Task BulkDeleteCommand(CommandContext ctx, [Description("Number of messages to delete")] int amount)
+        {
+            if (amount <= 0)
+            {
+                await ctx.Channel.SendMessageAsync("The amount of messages to remove must be positive.");
+                return;
+            }
+
+            var messages = await ctx.Channel.GetMessagesAsync(amount + 1);
+
+            var filteredMessages = messages.Where(x => (DateTimeOffset.UtcNow - x.Timestamp).TotalDays <= 14);
+
+            var count = filteredMessages.Count();
+
+            if (count == 0)
+                await ctx.Channel.SendMessageAsync("Nothing to delete.");
+
+            else
+            {
+                await ctx.Channel.DeleteMessagesAsync(filteredMessages);
+                await ctx.Channel.SendMessageAsync($"Successfully removed {count} {(count > 1 ? "messages" : "message")}.");
             }
         }
     }
