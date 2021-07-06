@@ -222,7 +222,7 @@
 
             if (user.Roles.Contains(mute))
             {
-                await ctx.Channel.SendMessageAsync($"{user.DisplayName}#{user.Discriminator} is already muted.");
+                await ctx.Channel.SendMessageAsync($"{user.DisplayName}#{user.Discriminator} is already unmuted.");
                 return;
             }
 
