@@ -1,6 +1,7 @@
 ﻿namespace AsdiaBot.Discord.Commands
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
     using DSharpPlus.CommandsNext;
@@ -10,7 +11,11 @@
     [Group("admin")]
     public class Moderation : BaseCommandModule
     {
-        public static ulong muteID = 845926252619104307;
+        public Dictionary<ulong, ulong> muteIDs = new()
+        {
+            { 784502677840592956, 845926252619104307 },
+            { 809409830367920138, 861791601205182505 },
+        };
 
         [Command("nick")]
         [Description("Changes the nickname of a user.")]
@@ -38,6 +43,8 @@
         [RequirePermissions(DSharpPlus.Permissions.KickMembers)]
         public async Task KickCommand(CommandContext ctx, [Description("The user to kick.")] DiscordMember user, [RemainingText][Description("The reason behind kicking the user.")] string reason)
         {
+            reason ??= $"{user.DisplayName}#{user.Discriminator} was muted";
+
             try
             {
                 await user.RemoveAsync(reason);
@@ -55,6 +62,8 @@
         [RequirePermissions(DSharpPlus.Permissions.BanMembers)]
         public async Task BanCommand(CommandContext ctx, [Description("The user to ban.")] DiscordMember user, [Description("The number of days of messages from the banned user to delete.")] int deleteMessageDays, [RemainingText][Description("The reason behind banning the user.")] string reason)
         {
+            reason ??= $"{user.DisplayName}#{user.Discriminator} was muted";
+
             try
             {
                 await user.BanAsync(deleteMessageDays, reason);
@@ -70,7 +79,7 @@
         [Command("move")]
         [Description("Moves a user to a voice channel.")]
         [RequirePermissions(DSharpPlus.Permissions.MoveMembers)]
-        public async Task BanCommand(CommandContext ctx, [Description("The user to move.")] DiscordMember user, [Description("The channel to move to.")] DiscordChannel channel)
+        public async Task MoveCommand(CommandContext ctx, [Description("The user to move.")] DiscordMember user, [Description("The channel to move to.")] DiscordChannel channel)
         {
             try
             {
@@ -157,9 +166,11 @@
         [RequirePermissions(DSharpPlus.Permissions.Administrator)]
         public async Task MuteCommand(CommandContext ctx, [Description("The user to mute.")] DiscordMember user, [RemainingText][Description("The reason behind muting the user.")] string reason)
         {
+            reason ??= $"{user.DisplayName}#{user.Discriminator} was muted";
+
             try
             {
-                await user.GrantRoleAsync(ctx.Guild.GetRole(muteID), reason);
+                await user.GrantRoleAsync(ctx.Guild.GetRole(muteIDs[ctx.Guild.Id]), reason);
 
                 await ctx.Channel.SendMessageAsync($"Successfully muted `{user.Username}`.").ConfigureAwait(false);
             }
@@ -174,9 +185,11 @@
         [RequirePermissions(DSharpPlus.Permissions.Administrator)]
         public async Task UnmuteCommand(CommandContext ctx, [Description("The user to unmute.")] DiscordMember user, [RemainingText][Description("The reason behind unmuting the user.")] string reason)
         {
+            reason ??= $"{user.DisplayName}#{user.Discriminator} was muted";
+
             try
             {
-                await user.RevokeRoleAsync(ctx.Guild.GetRole(muteID), reason);
+                await user.RevokeRoleAsync(ctx.Guild.GetRole(muteIDs[ctx.Guild.Id]), reason);
 
                 await ctx.Channel.SendMessageAsync($"Successfully unmuted `{user.Username}`.").ConfigureAwait(false);
             }
@@ -191,6 +204,8 @@
         [RequirePermissions(DSharpPlus.Permissions.Administrator)]
         public async Task AddRoleCommand(CommandContext ctx, [Description("The user to grant the role to.")] DiscordMember user, [Description("The ID of the role.")] string roleID, [RemainingText][Description("The reason behind granting the role to the user.")] string reason)
         {
+            reason ??= $"{user.DisplayName}#{user.Discriminator} was muted";
+
             try
             {
                 DiscordRole role = ctx.Guild.GetRole(ulong.Parse(roleID));
@@ -210,6 +225,8 @@
         [RequirePermissions(DSharpPlus.Permissions.Administrator)]
         public async Task RevokeRoleCommand(CommandContext ctx, [Description("The user to remove the role from.")] DiscordMember user, [Description("The ID of the role.")] string roleID, [RemainingText][Description("The reason behind removing the role from the user.")] string reason)
         {
+            reason ??= $"{user.DisplayName}#{user.Discriminator} was muted";
+
             try
             {
                 DiscordRole role = ctx.Guild.GetRole(ulong.Parse(roleID));
