@@ -13,6 +13,8 @@
     {
         private const ulong amongusID = 845950499248537600;
 
+        private const ulong yeahOkayID = 861949970886295552;
+
         public static void Main()
         {
             MainAsync().GetAwaiter().GetResult();
@@ -58,6 +60,12 @@
         {
             if (e.Author.IsBot)
             {
+                return;
+            }
+
+            if (e.Author.Id == 849283709173366834)
+            {
+                await e.Message.CreateReactionAsync(DiscordEmoji.FromGuildEmote(client, yeahOkayID));
                 return;
             }
 

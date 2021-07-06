@@ -55,7 +55,7 @@
                     x.AuditLogReason = $"Changed by {ctx.User.Username} ({ctx.User.Id}).";
                 });
 
-                await ctx.Channel.SendMessageAsync($"Successfully changed `{user.Username}`'s nickname.").ConfigureAwait(false);
+                await ctx.Channel.SendMessageAsync($"Successfully changed {user.DisplayName}#{user.Discriminator}'s nickname.").ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -74,7 +74,7 @@
             {
                 await user.RemoveAsync(reason);
 
-                await ctx.Channel.SendMessageAsync($"Successfully kicked `{user.Username}`.").ConfigureAwait(false);
+                await ctx.Channel.SendMessageAsync($"Successfully kicked {user.DisplayName}#{user.Discriminator}.").ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -93,7 +93,7 @@
             {
                 await user.BanAsync(deleteMessageDays, reason);
 
-                await ctx.Channel.SendMessageAsync($"Successfully banned `{user.Username}`.").ConfigureAwait(false);
+                await ctx.Channel.SendMessageAsync($"Successfully banned {user.DisplayName}#{user.Discriminator}.").ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -110,7 +110,7 @@
             {
                 await user.PlaceInAsync(channel);
 
-                await ctx.Channel.SendMessageAsync($"Successfully moved `{user.Username}` to {channel.Mention}.").ConfigureAwait(false);
+                await ctx.Channel.SendMessageAsync($"Successfully moved {user.DisplayName}#{user.Discriminator} to {channel.Mention}.").ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -127,7 +127,7 @@
             {
                 await user.SetMuteAsync(true);
 
-                await ctx.Channel.SendMessageAsync($"Successfully muted `{user.Username}`.").ConfigureAwait(false);
+                await ctx.Channel.SendMessageAsync($"Successfully muted {user.DisplayName}#{user.Discriminator}.").ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -144,7 +144,7 @@
             {
                 await user.SetDeafAsync(true);
 
-                await ctx.Channel.SendMessageAsync($"Successfully deafened `{user.Username}`.").ConfigureAwait(false);
+                await ctx.Channel.SendMessageAsync($"Successfully deafened {user.DisplayName}#{user.Discriminator}.").ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -161,7 +161,7 @@
             {
                 await user.SetMuteAsync(true);
 
-                await ctx.Channel.SendMessageAsync($"Successfully unmuted `{user.Username}`.").ConfigureAwait(false);
+                await ctx.Channel.SendMessageAsync($"Successfully unmuted {user.DisplayName}#{user.Discriminator}.").ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -178,7 +178,7 @@
             {
                 await user.SetDeafAsync(true);
 
-                await ctx.Channel.SendMessageAsync($"Successfully undeafened `{user.Username}`.").ConfigureAwait(false);
+                await ctx.Channel.SendMessageAsync($"Successfully undeafened {user.DisplayName}#{user.Discriminator}.").ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -191,13 +191,21 @@
         [RequirePermissions(DSharpPlus.Permissions.Administrator)]
         public async Task MuteCommand(CommandContext ctx, [Description("The user to mute.")] DiscordMember user, [RemainingText][Description("The reason behind muting the user.")] string reason)
         {
+            DiscordRole mute = ctx.Guild.GetRole(muteIDs[ctx.Guild.Id]);
+
+            if (user.Roles.Contains(mute))
+            {
+                await ctx.Channel.SendMessageAsync($"{user.DisplayName}#{user.Discriminator} is already muted.");
+                return;
+            }
+
             reason ??= $"{user.DisplayName}#{user.Discriminator} was muted";
 
             try
             {
-                await user.GrantRoleAsync(ctx.Guild.GetRole(muteIDs[ctx.Guild.Id]), reason);
+                await user.GrantRoleAsync(mute, reason);
 
-                await ctx.Channel.SendMessageAsync($"Successfully muted `{user.Username}`.").ConfigureAwait(false);
+                await ctx.Channel.SendMessageAsync($"Successfully muted {user.DisplayName}#{user.Discriminator}.").ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -210,13 +218,21 @@
         [RequirePermissions(DSharpPlus.Permissions.Administrator)]
         public async Task UnmuteCommand(CommandContext ctx, [Description("The user to unmute.")] DiscordMember user, [RemainingText][Description("The reason behind unmuting the user.")] string reason)
         {
+            DiscordRole mute = ctx.Guild.GetRole(muteIDs[ctx.Guild.Id]);
+
+            if (user.Roles.Contains(mute))
+            {
+                await ctx.Channel.SendMessageAsync($"{user.DisplayName}#{user.Discriminator} is already muted.");
+                return;
+            }
+
             reason ??= $"{user.DisplayName}#{user.Discriminator} was muted";
 
             try
             {
-                await user.RevokeRoleAsync(ctx.Guild.GetRole(muteIDs[ctx.Guild.Id]), reason);
+                await user.RevokeRoleAsync(mute, reason);
 
-                await ctx.Channel.SendMessageAsync($"Successfully unmuted `{user.Username}`.").ConfigureAwait(false);
+                await ctx.Channel.SendMessageAsync($"Successfully unmuted {user.DisplayName}#{user.Discriminator}.").ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -237,7 +253,7 @@
 
                 await user.GrantRoleAsync(role, reason);
 
-                await ctx.Channel.SendMessageAsync($"Successfully granted `{user.Username}` the role of {role.Name}.").ConfigureAwait(false);
+                await ctx.Channel.SendMessageAsync($"Successfully granted {user.DisplayName}#{user.Discriminator} the role of {role.Name}.").ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -258,7 +274,7 @@
 
                 await user.RevokeRoleAsync(role, reason);
 
-                await ctx.Channel.SendMessageAsync($"Successfully removed {role.Name} from `{user.Username}`").ConfigureAwait(false);
+                await ctx.Channel.SendMessageAsync($"Successfully removed {role.Name} from {user.DisplayName}#{user.Discriminator}").ConfigureAwait(false);
             }
             catch (Exception e)
             {
