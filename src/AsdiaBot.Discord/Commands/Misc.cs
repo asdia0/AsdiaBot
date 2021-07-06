@@ -44,7 +44,14 @@
         [Description("Rolls an 8-ball.")]
         public async Task EightBallCommand(CommandContext ctx, [RemainingText][Description("The question to ask the 8-ball.")] string question)
         {
-            await ctx.Channel.SendMessageAsync(eightBallResponses[new Random().Next(0, eightBallResponses.Count - 1)]).ConfigureAwait(false);
+            if (question == null)
+            {
+                await ctx.Channel.SendMessageAsync("Say something ya dipshit.");
+            }
+            else
+            {
+                await ctx.Channel.SendMessageAsync(eightBallResponses[new Random().Next(0, eightBallResponses.Count - 1)]).ConfigureAwait(false);
+            }
         }
 
         [Command("owo")]
