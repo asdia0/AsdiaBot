@@ -30,7 +30,7 @@
 
             var commands = discord.UseCommandsNext(new CommandsNextConfiguration()
             {
-                StringPrefixes = new[] { "a!" }
+                StringPrefixes = new[] { "a!", "!" }
             });
 
             commands.RegisterCommands<About>();
