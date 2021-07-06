@@ -51,21 +51,26 @@
         [Description("Owoifies the message given.")]
         public async Task OwoCommand(CommandContext ctx, [RemainingText][Description("The message to owoify.")] string message)
         {
-            await ctx.Channel.SendMessageAsync(Owoifier.Owoify(message, Owoifier.OwoifyLevel.Owo).Replace("`", "\\`")).ConfigureAwait(false);
+            await ctx.Channel.SendMessageAsync(this.WeebReplace(Owoifier.Owoify(message, Owoifier.OwoifyLevel.Owo))).ConfigureAwait(false);
         }
 
         [Command("uvu")]
         [Description("Uvuifies the message given.")]
         public async Task UvuCommand(CommandContext ctx, [RemainingText][Description("The message to uvuify.")] string message)
         {
-            await ctx.Channel.SendMessageAsync(Owoifier.Owoify(message, Owoifier.OwoifyLevel.Uvu).Replace("`", "\\`")).ConfigureAwait(false);
+            await ctx.Channel.SendMessageAsync(this.WeebReplace(Owoifier.Owoify(message, Owoifier.OwoifyLevel.Uvu))).ConfigureAwait(false);
         }
 
         [Command("uwu")]
         [Description("Uwuifies the message given.")]
         public async Task UwuCommand(CommandContext ctx, [RemainingText][Description("The message to uwuify.")] string message)
         {
-            await ctx.Channel.SendMessageAsync(Owoifier.Owoify(message, Owoifier.OwoifyLevel.Uwu).Replace("`", "\\`")).ConfigureAwait(false);
+            await ctx.Channel.SendMessageAsync(this.WeebReplace(Owoifier.Owoify(message, Owoifier.OwoifyLevel.Uwu))).ConfigureAwait(false);
+        }
+
+        public string WeebReplace(string input)
+        {
+            return input.Replace("`", "\\`");
         }
     }
 }
