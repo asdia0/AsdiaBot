@@ -11,9 +11,9 @@
 
     public class Program
     {
-        public static ulong amongusID = 845950499248537600;
+        private const ulong amongusID = 845950499248537600;
 
-        public static void Main(string[] args)
+        public static void Main()
         {
             MainAsync().GetAwaiter().GetResult();
         }

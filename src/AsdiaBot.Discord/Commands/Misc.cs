@@ -9,7 +9,7 @@
 
     public class Misc : BaseCommandModule
     {
-        List<string> eightBallResponses = new List<string>()
+        public readonly List<string> eightBallResponses = new()
         {
             "It is certain",
             "It is decidedly so",
