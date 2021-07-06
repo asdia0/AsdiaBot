@@ -3,10 +3,12 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.IO;
     using System.Threading.Tasks;
     using DSharpPlus.CommandsNext;
     using DSharpPlus.CommandsNext.Attributes;
     using DSharpPlus.Entities;
+    using Newtonsoft.Json;
 
     [Group("admin")]
     public class Moderation : BaseCommandModule
@@ -16,6 +18,29 @@
             { 784502677840592956, 845926252619104307 },
             { 809409830367920138, 861791601205182505 },
         };
+
+        [Command("addMute")]
+        [Description("Adds the server's muted role to muteIDs")]
+        public async Task AddMuteRoleCommand(CommandContext ctx, [Description("The ID of the Muted role.")] string sRoleID)
+        {
+            ulong roleID = ulong.Parse(sRoleID);
+            
+            if (muteIDs.ContainsKey(ctx.Guild.Id))
+            {
+                muteIDs[ctx.Guild.Id] = roleID;
+            }
+            else
+            {
+                muteIDs.Add(ctx.Guild.Id, roleID);
+            }
+
+            // Save to JSON file
+            File.WriteAllText("muteRoles.json", JsonConvert.SerializeObject(muteIDs));
+
+            DiscordRole role = ctx.Guild.GetRole(roleID);
+
+            await ctx.Channel.SendMessageAsync($"{role.Name} added as muted.");
+        }
 
         [Command("nick")]
         [Description("Changes the nickname of a user.")]
