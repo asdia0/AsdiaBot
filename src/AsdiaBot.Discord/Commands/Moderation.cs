@@ -13,53 +13,52 @@
     [Group("admin")]
     public class Moderation : BaseCommandModule
     {
-        public Dictionary<ulong, Dictionary<string, string>> servers
+        private Dictionary<long, Dictionary<string, string>> _Servers = new ();
+
+        public Dictionary<long, Dictionary<string, string>> Servers
         {
             get
             {
-                Dictionary<ulong, Dictionary<string, string>> res = new ();
+                return this._Servers;
+            }
 
-                try
-                {
-                    res = JsonConvert.DeserializeObject<Dictionary<ulong, Dictionary<string, string>>>(File.ReadAllText("AsdiaBot/servers.json"));
-                }
-                catch
-                { }
-
-                return res;
+            set
+            {
+                this._Servers = value;
             }
         }
 
-
-        public void UpdateServers(ulong guildID, string muteID = null, string prefix = null)
+        public async Task UpdateServers(long guildID, string muteID = null, string prefix = null)
         {
-            if (!this.servers.ContainsKey(guildID))
+            this.Servers = JsonConvert.DeserializeObject<Dictionary<long, Dictionary<string, string>>>(File.ReadAllText("AsdiaBot/servers.json"));
+
+            if (!this.Servers.ContainsKey(guildID))
             {
-                this.servers.Add(guildID, new()
+                this.Servers.Add(guildID, new()
                 {
                     { "mute", "0" },
-                    { "prefix", "" },
+                    { "prefix", "!" },
                 });
             }
 
             if (muteID != null)
             {
-                this.servers[guildID]["mute"] = muteID;
+                this.Servers[guildID]["mute"] = muteID;
             }
 
             if (prefix != null)
             {
-                this.servers[guildID]["prefix"] = prefix;
+                this.Servers[guildID]["prefix"] = prefix;
             }
 
-            File.WriteAllText("AsdiaBot/servers.json", JsonConvert.SerializeObject(servers));
+            File.WriteAllText("AsdiaBot/servers.json", JsonConvert.SerializeObject(this.Servers));
         }
 
         [Command("addMute")]
         [Description("Adds the server's muted role to muteIDs")]
-        public async Task AddMuteRoleCommand(CommandContext ctx, [Description("The ID of the Muted role.")] string sRoleID)
+        public async Task AddMuteRoleCommand(CommandContext ctx, [RemainingText][Description("The ID of the Muted role.")] string sRoleID)
         {
-            this.UpdateServers(ctx.Guild.Id, sRoleID);
+            await this.UpdateServers(long.Parse(ctx.Guild.Id.ToString()), muteID:sRoleID);
 
             await ctx.Channel.SendMessageAsync($"{ctx.Guild.GetRole(ulong.Parse(sRoleID)).Name} added as muted.");
         }
@@ -213,9 +212,11 @@
         [RequirePermissions(DSharpPlus.Permissions.Administrator)]
         public async Task MuteCommand(CommandContext ctx, [Description("The user to mute.")] DiscordMember user, [RemainingText][Description("The reason behind muting the user.")] string reason)
         {
-            ulong roleID = ulong.Parse(servers[ctx.Guild.Id]["mute"]);
+            await this.UpdateServers(long.Parse(ctx.Guild.Id.ToString()));
 
-            if (roleID == 0)
+            ulong roleID = ulong.Parse(Servers[long.Parse(ctx.Guild.Id.ToString())]["mute"]);
+
+            if (!Servers.ContainsKey(long.Parse(ctx.Guild.Id.ToString())) || roleID == 0)
             {
                 await ctx.Channel.SendMessageAsync("Muted role must be set using `admin addMute` first.");
                 return;
@@ -248,9 +249,11 @@
         [RequirePermissions(DSharpPlus.Permissions.Administrator)]
         public async Task UnmuteCommand(CommandContext ctx, [Description("The user to unmute.")] DiscordMember user, [RemainingText][Description("The reason behind unmuting the user.")] string reason)
         {
-            ulong roleID = ulong.Parse(servers[ctx.Guild.Id]["mute"]);
+            await this.UpdateServers(long.Parse(ctx.Guild.Id.ToString()));
 
-            if (roleID == 0)
+            ulong roleID = ulong.Parse(Servers[long.Parse(ctx.Guild.Id.ToString())]["mute"]);
+
+            if (!Servers.ContainsKey(long.Parse(ctx.Guild.Id.ToString())) || roleID == 0)
             {
                 await ctx.Channel.SendMessageAsync("Muted role must be set using `admin addMute` first.");
                 return;
