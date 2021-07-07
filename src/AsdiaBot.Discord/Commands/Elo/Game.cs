@@ -13,7 +13,7 @@
     {
         [Command("add")]
         [Description("Adds a game.")]
-        public async Task AddGame(CommandContext ctx, string whiteName, string blackName, string gameResult, string isRated)
+        public async Task AddGameCommand(CommandContext ctx, string whiteName, string blackName, string gameResult, string isRated)
         {
             DiscordRole chessAdmin = ctx.Guild.GetRole(ulong.Parse(Program.Servers[long.Parse(ctx.Guild.Id.ToString())]["chess"]));
 
