@@ -6,7 +6,7 @@
     using DSharpPlus.CommandsNext.Attributes;
 
     [Group("client")]
-    public class About : BaseCommandModule
+    public class Client : BaseCommandModule
     {
         [Command("ping")]
         [Aliases("p")]
