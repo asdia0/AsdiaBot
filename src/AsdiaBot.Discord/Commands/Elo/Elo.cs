@@ -7,7 +7,7 @@
     using DSharpPlus.Entities;
 
     [Group("Elo")]
-    public class Elo : BaseCommandModule
+    public partial class Elo : BaseCommandModule
     {
         [Command("version")]
         [Description("Gets the EloCalculator version running.")]
