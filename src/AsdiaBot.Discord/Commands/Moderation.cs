@@ -19,6 +19,8 @@
         [Description("Adds the server's muted role to muteIDs")]
         public async Task AddMuteRoleCommand(CommandContext ctx, [Description("The ID of the Muted role.")] string sRoleID)
         {
+            muteIDs = JsonConvert.DeserializeObject<Dictionary<ulong, ulong>>(File.ReadAllText("AsdiaBot/servers.json"));
+
             ulong roleID = ulong.Parse(sRoleID);
             
             if (muteIDs.ContainsKey(ctx.Guild.Id))
