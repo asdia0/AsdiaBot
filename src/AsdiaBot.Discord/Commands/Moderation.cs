@@ -14,12 +14,21 @@
     public class Moderation : BaseCommandModule
     {
         [Command("addMute")]
-        [Description("Adds the server's muted role to muteIDs")]
+        [Description("Adds the server's muted role.")]
         public async Task AddMuteRoleCommand(CommandContext ctx, [RemainingText][Description("The ID of the Muted role.")] string sRoleID)
         {
             Program.UpdateServers(long.Parse(ctx.Guild.Id.ToString()), muteID:sRoleID);
 
             await ctx.Channel.SendMessageAsync($"{ctx.Guild.GetRole(ulong.Parse(sRoleID)).Name} added as muted.");
+        }
+
+        [Command("addChess")]
+        [Description("Adds the server's chess admin role.")]
+        public async Task AddChessRoleCommand(CommandContext ctx, [RemainingText][Description("The ID of the Chess Admin role.")] string sRoleID)
+        {
+            Program.UpdateServers(long.Parse(ctx.Guild.Id.ToString()), chessID:sRoleID);
+
+            await ctx.Channel.SendMessageAsync($"{ctx.Guild.GetRole(ulong.Parse(sRoleID)).Name} added as chess admin.");
         }
 
         [Command("nick")]
