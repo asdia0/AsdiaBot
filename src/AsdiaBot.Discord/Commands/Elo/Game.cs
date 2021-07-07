@@ -8,7 +8,7 @@
     using DSharpPlus.Entities;
     using EloCalculator;
 
-    [Group("Elo Game")]
+    [Group("Game")]
     public class Game : Elo
     {
         [Command("add")]
