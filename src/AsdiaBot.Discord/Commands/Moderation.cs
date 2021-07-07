@@ -28,7 +28,7 @@
             }
         }
 
-        public async Task UpdateServers(long guildID, string muteID = null, string prefix = null)
+        public void UpdateServers(long guildID, string muteID = null, string prefix = null)
         {
             this.Servers = JsonConvert.DeserializeObject<Dictionary<long, Dictionary<string, string>>>(File.ReadAllText("AsdiaBot/servers.json"));
 
@@ -58,7 +58,7 @@
         [Description("Adds the server's muted role to muteIDs")]
         public async Task AddMuteRoleCommand(CommandContext ctx, [RemainingText][Description("The ID of the Muted role.")] string sRoleID)
         {
-            await this.UpdateServers(long.Parse(ctx.Guild.Id.ToString()), muteID:sRoleID);
+            this.UpdateServers(long.Parse(ctx.Guild.Id.ToString()), muteID:sRoleID);
 
             await ctx.Channel.SendMessageAsync($"{ctx.Guild.GetRole(ulong.Parse(sRoleID)).Name} added as muted.");
         }
@@ -212,7 +212,7 @@
         [RequirePermissions(DSharpPlus.Permissions.Administrator)]
         public async Task MuteCommand(CommandContext ctx, [Description("The user to mute.")] DiscordMember user, [RemainingText][Description("The reason behind muting the user.")] string reason)
         {
-            await this.UpdateServers(long.Parse(ctx.Guild.Id.ToString()));
+            this.UpdateServers(long.Parse(ctx.Guild.Id.ToString()));
 
             ulong roleID = ulong.Parse(Servers[long.Parse(ctx.Guild.Id.ToString())]["mute"]);
 
@@ -249,7 +249,7 @@
         [RequirePermissions(DSharpPlus.Permissions.Administrator)]
         public async Task UnmuteCommand(CommandContext ctx, [Description("The user to unmute.")] DiscordMember user, [RemainingText][Description("The reason behind unmuting the user.")] string reason)
         {
-            await this.UpdateServers(long.Parse(ctx.Guild.Id.ToString()));
+            this.UpdateServers(long.Parse(ctx.Guild.Id.ToString()));
 
             ulong roleID = ulong.Parse(Servers[long.Parse(ctx.Guild.Id.ToString())]["mute"]);
 
@@ -261,7 +261,7 @@
 
             DiscordRole mute = ctx.Guild.GetRole(roleID);
 
-            if (user.Roles.Contains(mute))
+            if (!user.Roles.Contains(mute))
             {
                 await ctx.Channel.SendMessageAsync($"{user.DisplayName}#{user.Discriminator} is already unmuted.");
                 return;
