@@ -11,7 +11,7 @@
     {
         [Command("version")]
         [Description("Gets the EloCalculator version running.")]
-        public async Task Version(CommandContext ctx)
+        public async Task VersionCommand(CommandContext ctx)
         {
             await ctx.Channel.SendMessageAsync("EloCalculator v1.0.0");
         }
