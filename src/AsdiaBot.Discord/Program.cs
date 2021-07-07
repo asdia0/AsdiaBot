@@ -32,7 +32,7 @@
             }
         }
 
-        public static void UpdateServers(long guildID, string muteID = null, string prefix = null)
+        public static void UpdateServers(long guildID, string muteID = null, string chessID = null, string prefix = null)
         {
             Program.Servers = JsonConvert.DeserializeObject<Dictionary<long, Dictionary<string, string>>>(File.ReadAllText("AsdiaBot/servers.json"));
 
@@ -42,6 +42,7 @@
                 {
                     { "mute", "0" },
                     { "prefix", "!" },
+                    { "chess", "0" },
                 });
             }
 
@@ -53,6 +54,11 @@
             if (prefix != null)
             {
                 Program.Servers[guildID]["prefix"] = prefix;
+            }
+
+            if (chessID != null)
+            {
+                Program.Servers[guildID]["chess"] = chessID;
             }
 
             File.WriteAllText("AsdiaBot/servers.json", JsonConvert.SerializeObject(Program.Servers));
