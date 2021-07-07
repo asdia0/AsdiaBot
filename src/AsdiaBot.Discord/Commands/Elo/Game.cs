@@ -17,7 +17,6 @@
             [Description("Adds a game.")]
             public async Task AddGameCommand(CommandContext ctx, string whiteName, string blackName, string gameResult, string isRated)
             {
-
                 DiscordRole chessAdmin;
 
                 try
@@ -91,6 +90,28 @@
                 EloCalculator.Game game = new EloCalculator.Game(white, black, (Result)result, DateTime.Now, (bool)rated);
 
                 await ctx.Channel.SendMessageAsync($"Createed game {game.ID}.");
+            }
+
+            [Command("query")]
+            [Description("Retrieves a game's information.")]
+            public async Task QueryGameCommand(CommandContext ctx, int id)
+            {
+                EloCalculator.Game game = GameDatabase.Games.Where(i => i.ID == id).FirstOrDefault();
+
+                if (game == null)
+                {
+                    await ctx.Channel.SendMessageAsync($"No game with ID {id} found.");
+                }
+                else
+                {
+                    await ctx.Channel.SendMessageAsync(new DiscordEmbedBuilder()
+                    {
+                        Color = new DiscordColor("#87C1AC"),
+                        Title = $"Game {id}",
+                        Description = $"White: {game.White.Name} ({game.White.Rating})\nBlack: {game.Black.Name} ({game.Black.Rating})\nResult: {game.Result}\nDate and Time: {game.DateTime}\nIs Rated: {game.Rated}",
+                        Timestamp = DateTime.UtcNow,
+                    });
+                }
             }
         }
     }
