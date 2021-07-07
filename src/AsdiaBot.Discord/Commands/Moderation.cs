@@ -13,11 +13,7 @@
     [Group("admin")]
     public class Moderation : BaseCommandModule
     {
-        public Dictionary<ulong, ulong> muteIDs = new()
-        {
-            { 784502677840592956, 845926252619104307 },
-            { 809409830367920138, 861791601205182505 },
-        };
+        public Dictionary<ulong, ulong> muteIDs = new();
 
         [Command("addMute")]
         [Description("Adds the server's muted role to muteIDs")]
@@ -35,7 +31,7 @@
             }
 
             // Save to JSON file
-            File.WriteAllText("muteRoles.json", JsonConvert.SerializeObject(muteIDs));
+            File.WriteAllText("AsdiaBot/servers.json", JsonConvert.SerializeObject(muteIDs));
 
             DiscordRole role = ctx.Guild.GetRole(roleID);
 
