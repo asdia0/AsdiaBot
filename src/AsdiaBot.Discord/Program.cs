@@ -24,7 +24,7 @@
         {
             var discord = new DiscordClient(new DiscordConfiguration()
             {
-                Token = File.ReadAllText("token.txt"),
+                Token = File.ReadAllText("AsdiaBot/token.txt"),
                 TokenType = TokenType.Bot
             });
 
@@ -74,19 +74,9 @@
                 await e.Message.CreateReactionAsync(DiscordEmoji.FromGuildEmote(client, amongusID));
             }
 
-            if (e.Message.Content.ToLower().Contains("cute puppies"))
-            {
-                await e.Channel.SendMessageAsync("https://www.youtube.com/watch?v=j5a0jTc9S10");
-            }
-
             if (e.Message.Content.ToLower().Contains("dunkaccino"))
             {
                 await e.Channel.SendMessageAsync("https://www.youtube.com/watch?v=AeLuQQH1OHA");
-            }
-
-            if (e.Message.Content.ToLower().Contains("bit"))
-            {
-                await e.Channel.SendMessageAsync("https://www.youtube.com/watch?v=ptWdaqensBk");
             }
 
             if (e.Message.Content.ToLower().Contains("en passant"))
