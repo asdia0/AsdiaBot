@@ -2,18 +2,61 @@
 {
     using AsdiaBot.Discord.Commands;
     using System;
+    using System.Collections.Generic;
     using System.IO;
     using System.Threading.Tasks;
     using DSharpPlus;
     using DSharpPlus.CommandsNext;
     using DSharpPlus.Entities;
     using DSharpPlus.EventArgs;
+    using Newtonsoft.Json;
 
     public class Program
     {
         private const ulong amongusID = 845950499248537600;
 
         private const ulong yeahOkayID = 861949970886295552;
+
+        private static Dictionary<long, Dictionary<string, string>> _Servers = new();
+
+        public static Dictionary<long, Dictionary<string, string>> Servers
+        {
+            get
+            {
+                return _Servers;
+            }
+
+            set
+            {
+                _Servers = value;
+            }
+        }
+
+        public static void UpdateServers(long guildID, string muteID = null, string prefix = null)
+        {
+            Program.Servers = JsonConvert.DeserializeObject<Dictionary<long, Dictionary<string, string>>>(File.ReadAllText("AsdiaBot/servers.json"));
+
+            if (!Program.Servers.ContainsKey(guildID))
+            {
+                Program.Servers.Add(guildID, new()
+                {
+                    { "mute", "0" },
+                    { "prefix", "!" },
+                });
+            }
+
+            if (muteID != null)
+            {
+                Program.Servers[guildID]["mute"] = muteID;
+            }
+
+            if (prefix != null)
+            {
+                Program.Servers[guildID]["prefix"] = prefix;
+            }
+
+            File.WriteAllText("AsdiaBot/servers.json", JsonConvert.SerializeObject(Program.Servers));
+        }
 
         public static void Main()
         {
@@ -35,7 +78,7 @@
                 StringPrefixes = new[] { "a!", "!" }
             });
 
-            commands.RegisterCommands<About>();
+            commands.RegisterCommands<Client>();
             commands.RegisterCommands<Misc>();
             commands.RegisterCommands<Moderation>();
             commands.RegisterCommands<Elo>();
