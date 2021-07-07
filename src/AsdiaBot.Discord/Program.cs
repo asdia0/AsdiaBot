@@ -38,6 +38,7 @@
             commands.RegisterCommands<About>();
             commands.RegisterCommands<Misc>();
             commands.RegisterCommands<Moderation>();
+            commands.RegisterCommands<Elo>();
 
             var act = new DiscordActivity("with your mom", ActivityType.Playing);
             await discord.ConnectAsync(act, UserStatus.DoNotDisturb).ConfigureAwait(false);
