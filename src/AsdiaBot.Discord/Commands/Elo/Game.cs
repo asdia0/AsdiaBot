@@ -8,16 +8,25 @@
     using DSharpPlus.Entities;
     using EloCalculator;
 
-    [Group("Game")]
+    [Group("Elo Game")]
     public class Game : Elo
     {
         [Command("add")]
         [Description("Adds a game.")]
         public async Task AddGame(CommandContext ctx, string whiteName, string blackName, string gameResult, string isRated)
         {
-            if (!ctx.Member.Roles.Contains(ChessAdmin))
+            DiscordRole chessAdmin = ctx.Guild.GetRole(ulong.Parse(Program.Servers[long.Parse(ctx.Guild.Id.ToString())]["chess"]));
+
+            if (chessAdmin == null)
+            {
+                await ctx.Channel.SendMessageAsync("Chess admin role must be set using `admin addChess` first.");
+                return;
+            }
+
+            if (!ctx.Member.Roles.Contains(chessAdmin))
             {
                 await ctx.Channel.SendMessageAsync("Only chess admins can add games.");
+                return;
             }
 
             Player white = PlayerDatabase.Players.Where(i => i.Name == whiteName).FirstOrDefault();
