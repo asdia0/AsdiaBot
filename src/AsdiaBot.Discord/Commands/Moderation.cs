@@ -17,7 +17,16 @@
         {
             get
             {
-                return JsonConvert.DeserializeObject<Dictionary<ulong, Dictionary<string, string>>>(File.ReadAllText("AsdiaBot/servers.json"));
+                Dictionary<ulong, Dictionary<string, string>> res = new ();
+
+                try
+                {
+                    res = JsonConvert.DeserializeObject<Dictionary<ulong, Dictionary<string, string>>>(File.ReadAllText("AsdiaBot/servers.json"));
+                }
+                catch
+                { }
+
+                return res;
             }
         }
 
