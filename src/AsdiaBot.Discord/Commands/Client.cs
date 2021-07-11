@@ -4,6 +4,7 @@
     using System.Threading.Tasks;
     using DSharpPlus.CommandsNext;
     using DSharpPlus.CommandsNext.Attributes;
+    using DSharpPlus.Entities;
 
     [Group("client")]
     public class Client : BaseCommandModule
@@ -21,6 +22,20 @@
         public async Task PrefixCommand(CommandContext ctx)
         {
             await ctx.Channel.SendMessageAsync($"Accepted prefixes: `a!`").ConfigureAwait(false);
+        }
+
+        [Command("id")]
+        [Description("Returns the user's ID.")]
+        public async Task IdCommand(CommandContext ctx, DiscordUser user)
+        {
+            await ctx.Channel.SendMessageAsync(user.Id.ToString());
+        }
+
+        [Command("id")]
+        [Description("Returns the author's ID.")]
+        public async Task IdCommand(CommandContext ctx)
+        {
+            await ctx.Channel.SendMessageAsync(ctx.Message.Author.Id.ToString());
         }
     }
 }
