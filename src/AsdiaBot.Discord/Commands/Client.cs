@@ -37,5 +37,12 @@
         {
             await ctx.Channel.SendMessageAsync(ctx.Message.Author.Id.ToString());
         }
+
+        [Command("serverid")]
+        [Description("Returns the server's ID.")]
+        public async Task ServerIdCommand(CommandContext ctx)
+        {
+            await ctx.Channel.SendMessageAsync(ctx.Guild.Id.ToString());
+        }
     }
 }
