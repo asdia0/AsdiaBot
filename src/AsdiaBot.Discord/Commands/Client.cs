@@ -28,21 +28,21 @@
         [Description("Returns the user's ID.")]
         public async Task IdCommand(CommandContext ctx, DiscordUser user)
         {
-            await ctx.Channel.SendMessageAsync(user.Id.ToString());
+            await ctx.Channel.SendMessageAsync($"{user.Username}#{user.Discriminator}'s Id is `{user.Id}`.");
         }
 
         [Command("id")]
         [Description("Returns the author's ID.")]
         public async Task IdCommand(CommandContext ctx)
         {
-            await ctx.Channel.SendMessageAsync(ctx.Message.Author.Id.ToString());
+            await ctx.Channel.SendMessageAsync($"{ctx.Message.Author.Username}#{ctx.Message.Author.Discriminator}'s Id is `{ctx.Message.Author.Id}`.");
         }
 
         [Command("serverid")]
         [Description("Returns the server's ID.")]
         public async Task ServerIdCommand(CommandContext ctx)
         {
-            await ctx.Channel.SendMessageAsync(ctx.Guild.Id.ToString());
+            await ctx.Channel.SendMessageAsync($"{ctx.Guild.Name}'s Id is `{ctx.Guild.Id}`.");
         }
     }
 }
